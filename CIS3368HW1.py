@@ -1,3 +1,30 @@
+import mysql.connector
+from mysql.connector import Error
+
+def create_con(hostname, username, userpw, dbname):
+    connection = None
+    try:
+        connection = mysql.connector.connect(
+            host=hostname,
+            user=username,
+            password=userpw,
+            database=dbname
+        )
+        print("connection successful")
+    except Error as e:
+        print(f'the error {e} occured')
+    return connection
+
+conn = create_con('yourConnectionString', 'yourUsername', 'yourPassword', 'yourDBname')
+cursor = conn.cursor(dictionary = True)
+sql = "Select * from users"
+cursor.execute(sql)
+rows = cursor.fetchall()
+for user in rows:
+    print(user)
+    print("the user's first name is : " + user["firstname"])
+
+
 fish_details = []
 
 def add_fish():
