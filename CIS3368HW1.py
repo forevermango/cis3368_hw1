@@ -15,7 +15,7 @@ def create_con(hostname, username, userpw, dbname):
         print(f'the error {e} occured')
     return connection
 
-conn = create_con('yourConnectionString', 'yourUsername', 'yourPassword', 'yourDBname')
+conn = create_con('hw1cis3368.c8aubdep9gnu.us-east-2.rds.amazonaws.com', 'admin', 'Passward1!', 'hw1cis3368')
 cursor = conn.cursor(dictionary = True)
 sql = "Select * from users"
 cursor.execute(sql)
@@ -24,23 +24,23 @@ for user in rows:
     print(user)
     print("the user's first name is : " + user["firstname"])
 
-
 fish_details = []
 
 def add_fish():
-    superclass = input("Enter the superclass of the fish: ")
-    species = input("Enter the species of the fish: ")
-    color = input("Enter the color of the fish: ")
-    acquired = input("Enter the acquired of the fish: ")
-    alive = input("Enter the alive of the fish: ")
-
-
-
-    fish_details.append({ "species": species, "color": color, acquired:"acquired", alive:"alive"})
+    Superclass = input("Enter the superclass of the fish: ")
+    Species = input("Enter the species of the fish: ")
+    Color = input("Enter the color of the fish: ")
+    Acquired = input("Enter the acquired of the fish: ")
+    Alive = input("Enter the alive of the fish: ")
+    sql = "INSERT INTO Fish (Superclass, Species, Color, Acquired, Alive) VALUES (%s, %s, %s, %s, %s)"
+    val = (Superclass, Species, Color, Acquired, Alive)
+    cursor.execute(sql, val)
+    conn.commit()
+    fish_details.append({"Superclass": Superclass, "Species": Species, "Color": Color, Acquired:"Acquired", Alive:"Alive"})
 
 def output_fish():
-    for fish in fish_details:
-        print(f"Species: {fish['species']}, Color: {fish['color']}, Acquired: {fish['acquired']}, Alive: {fish['alive']}")
+    for Fish in fish_details:
+        print(f"Species: {Fish['superclass']}, {Fish['species']}, Color: {Fish['color']}, Acquired: {Fish['acquired']}, Alive: {Fish['alive']}")
 
 def show_menu():
     print("\nMENU")
@@ -62,3 +62,4 @@ while True:
     if len(fish_details) == 0:
         continue
     break
+conn.close()
